@@ -2,7 +2,7 @@
 
 -- |
 -- Module      :  Test.ChasingBottoms.Nat
--- Copyright   :  (c) Nils Anders Danielsson 2004-2020
+-- Copyright   :  (c) Nils Anders Danielsson 2004-2022
 -- License     :  See the file LICENCE.
 --
 -- Maintainer  :  http://www.cse.chalmers.se/~nad/
@@ -74,7 +74,7 @@ instance Num Nat where
                 | otherwise = Nat i
 
 instance Real Nat where
-  toRational = (%1) . nat2int
+  toRational = (% 1) . nat2int
 
 steal2 :: (Integer -> Integer -> (Integer, Integer))
           -> Nat -> Nat -> (Nat, Nat)

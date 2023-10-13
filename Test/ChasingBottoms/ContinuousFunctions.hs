@@ -12,7 +12,7 @@
 
 -- |
 -- Module      :  Test.ChasingBottoms.ContinuousFunctions
--- Copyright   :  (c) Nils Anders Danielsson 2005-2020
+-- Copyright   :  (c) Nils Anders Danielsson 2005-2022
 -- License     :  See the file LICENCE.
 --
 -- Maintainer  :  http://www.cse.chalmers.se/~nad/
@@ -313,7 +313,7 @@ getMatches pms = do
   (_, pms') <- partition' 9 pms
   -- Use pattern matches with probability 0.33.
   (use, keep) <- partition' 2 pms'
-  let transform = compose $ fmap apply use
+  let transform = compose $ fmap (\pm -> apply pm) use
       further = concat $ fmap more use
   if Seq.null further then
     return (GenT transform, keep)

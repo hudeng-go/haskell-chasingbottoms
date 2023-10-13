@@ -4,7 +4,7 @@
 
 -- |
 -- Module      :  Test.ChasingBottoms.SemanticOrd
--- Copyright   :  (c) Nils Anders Danielsson 2004-2020
+-- Copyright   :  (c) Nils Anders Danielsson 2004-2022
 -- License     :  See the file LICENCE.
 --
 -- Maintainer  :  http://www.cse.chalmers.se/~nad/
@@ -174,8 +174,7 @@ a =^= b = toConstr a == toConstr b
 
 -- Check children.
 childrenOK :: Rel -> Rel
-childrenOK op = and .|.. gzipWithQ (\x y -> op x y)
-  where f .|.. g = \x y -> f (g x y)
+childrenOK op x y = and (gzipWithQ (\x y -> op x y) x y)
 
 ------------------------------------------------------------------------
 

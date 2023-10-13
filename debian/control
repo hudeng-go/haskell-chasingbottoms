@@ -1,6 +1,6 @@
 Source: haskell-chasingbottoms
 Maintainer: Debian Haskell Group <pkg-haskell-maintainers@lists.alioth.debian.org>
-Uploaders: Joachim Breitner <nomeata@debian.org>, Ilias Tsitsimpis <iliastsi@debian.org>
+Uploaders: Ilias Tsitsimpis <iliastsi@debian.org>
 Priority: optional
 Section: haskell
 Rules-Requires-Root: no
@@ -22,7 +22,7 @@ Build-Depends-Indep: ghc-doc,
  libghc-quickcheck2-doc,
  libghc-random-doc,
  libghc-syb-doc,
-Standards-Version: 4.1.4
+Standards-Version: 4.6.1
 Homepage: http://hackage.haskell.org/package/ChasingBottoms
 Vcs-Browser: https://salsa.debian.org/haskell-team/DHG_packages/tree/master/p/haskell-chasingbottoms
 Vcs-Git: https://salsa.debian.org/haskell-team/DHG_packages.git [p/haskell-chasingbottoms]
