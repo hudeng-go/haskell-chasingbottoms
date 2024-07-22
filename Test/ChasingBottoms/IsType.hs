@@ -1,6 +1,8 @@
+{-# LANGUAGE CPP, ScopedTypeVariables #-}
+
 -- |
 -- Module      :  Test.ChasingBottoms.IsType
--- Copyright   :  (c) Nils Anders Danielsson 2004-2022
+-- Copyright   :  (c) Nils Anders Danielsson 2004-2022, 2024
 -- License     :  See the file LICENCE.
 --
 -- Maintainer  :  http://www.cse.chalmers.se/~nad/
@@ -27,12 +29,30 @@ isFunction f = con f == con not  -- TyCon is abstract.
 con :: Typeable a => a -> TyCon
 con = typeRepTyCon . typeOf
 
--- | This function is rather fragile, but should be OK. It is only
--- used by "Test.ChasingBottoms.ApproxShow", which should only be used
--- for debugging purposes anyway. The unit type is not considered to
--- be a tuple.
+-- | This function is rather fragile. However, it is only used by
+-- "Test.ChasingBottoms.ApproxShow", which should only be used for
+-- debugging purposes anyway. The unit type is not considered to be a
+-- tuple.
 isTuple :: Typeable a => a -> Bool
-isTuple x = "(," `isPrefixOf` show (con x)
+isTuple x =
+#if MIN_VERSION_base(4,19,0)
+  "Tuple" `isPrefixOf` c
+    &&
+  case reads (drop 5 c) of
+    [(n :: Integer, "")] -> n >= 2
+    _                    -> False
+  where
+  c = tyConName (con x)
+#else
+  isTuple' (tyConName (con x))
+  where
+  isTuple' ('(' : ',' : rest) = isTuple'' rest
+  isTuple' _                  = False
+
+  isTuple'' ")"          = True
+  isTuple'' (',' : rest) = isTuple'' rest
+  isTuple'' _            = False
+#endif
 
 isString :: Typeable a => a -> Bool
 isString x = isList x && typeRepArgs (typeOf x) == typeRepArgs (typeOf "")
